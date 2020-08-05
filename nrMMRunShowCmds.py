@@ -2,6 +2,8 @@ from nornir import InitNornir
 from nornir.plugins.tasks.networking import netmiko_send_command
 from nornir.plugins.functions.text import print_result
 from myfuncs.ImpFunct import get_credentials, read_file, generate_hosts_yaml
+from datetime import datetime 
+import os
 
 
 # Generate defaults.yaml file with username and password
@@ -40,7 +42,15 @@ if __name__=='__main__':
 
 	# Instantiate a Nornir object
 	nr = InitNornir(config_file='config.yaml')
-	
+
+	# Get the current time and modify it by replacing ':'' with ''
+	time_now = datetime.now().isoformat(timespec='seconds')
+	modified_time = time_now.replace(':','')
+
+	# Create new Folder as a holder for the output files
+	dirname = 'Nornir-' + modified_time
+	os.mkdir(dirname)
+
 	# Iterate on each command
 	for cmd in commands:
 		nr_result = nr.run(task=netmiko_send_command, command_string=cmd)
@@ -49,7 +59,7 @@ if __name__=='__main__':
 		# Replace '|' and ' ' characters with '_' for filename
 		cmd_name = cmd.replace('|','_').replace(' ','_')
 		# Create a filename from each command and write to a file
-		filename = f'result_{cmd_name}.txt'
+		filename = '/'.join((dirname, f'result_{cmd_name}.txt'))
 		with open(filename, 'w+') as f:
 			for key in nr_result.keys():
 				print(nr_result[key][0], file=f)
