@@ -1,0 +1,2 @@
+show spanning-tree summary
+show vtp status

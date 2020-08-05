@@ -1,0 +1,21 @@
+---
+Switch: 
+  port: 22
+  platform: cisco_ios
+  connection_options:
+    napalm:
+      extras:
+        optional_args:
+          secret: ki@h5kuHIquF
+          
+BorderSW:
+  port: 22
+  platform: cisco_ios
+
+DeskSW:
+  port: 22
+  platform: cisco_ios
+
+AggSW:
+  port: 22
+  platform: cisco_ios

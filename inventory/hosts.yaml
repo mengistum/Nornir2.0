@@ -1,0 +1,10 @@
+---
+SW_10.192.224.30:
+  hostname: 10.192.224.30
+  groups:
+    - Switch
+
+SW_10.193.224.20:
+  hostname: 10.193.224.20
+  groups:
+    - Switch
