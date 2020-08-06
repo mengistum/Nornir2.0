@@ -63,6 +63,9 @@ if __name__=='__main__':
 		with open(filename, 'w+') as f:
 			for key in nr_result.keys():
 				print(nr_result[key][0], file=f)
+				
+	# Generate placeholder username and password
+	generate_defaults_yaml('cisco', 'password')
 
 	# Freeze screen until any key pressed
 	input('Enter any key to exit!!!')
