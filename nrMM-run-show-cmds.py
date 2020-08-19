@@ -2,14 +2,14 @@
 
 """
 Author: Meheretab Mengistu
-Purpose: A script based on Nornir framework to run one or more \
-        "show commands" on one or more network devices, and save \
-        the output to files.
+Purpose: A script based on Nornir framework to run one or more 
+        "show commands" on one or more network devices, and save 
+        the output to file(s).
 Version: 2.0
-Date: August 16, 2020
+Date: August 18, 2020
 """
 
-# Import NORNIR module, datetime module, OS module \
+# Import NORNIR module, datetime module, OS module 
 # and myfuncs module (module written by me)
 from nornir import InitNornir
 from nornir.plugins.tasks.networking import netmiko_send_command
@@ -46,46 +46,49 @@ def main():
         print('*' * 79 + '\n')
 
         # Get IP addresses of devices you want to connect and generate hosts.yaml file
-        devices_txt = input('Please enter txt file containing IP addresses: ')
+        devices_txt = input('Please enter .txt file containing IP addresses [devices.txt]: ') or 'devices.txt'
         devices = read_file(devices_txt)
         generate_hosts_yaml(devices, 'inventory/hosts.yaml')
 
         # Get the list of commands to run on each device
-        commands_txt = input('Please enter the text file containing commands: ')
+        commands_txt = input('Please enter .txt file containing commands [commands.txt]: ') or 'commands.txt'
         commands = read_file(commands_txt)
 
-        # Get user credentials from the user and generate defaults.yaml file
+        # Get user credentials from the user
         username, password = get_credentials()
+        # Generate 'inventory/defaults.yaml' file containing user credential
         generate_defaults_yaml(username, password)
 
-        # Instantiate a Nornir object
+        # Instantiate a Nornir object from .yaml file
         nr = InitNornir(config_file='config.yaml')
 
-        # Get the current time and modify it by replacing ':'' with ''
+        # Get the current time 
         time_now = datetime.now().isoformat(timespec='seconds')
-        modified_time = time_now.replace(':','')
 
-        # Create new Folder as a holder for the output files
-        dirname = 'Nornir-' + modified_time
+        # Create a Folder as a holder for the output files
+        dirname = 'Nornir-' + time_now.replace(':','')
         os.mkdir(dirname)
 
-        # Iterate on each command
+        # Iterate on each command provided by the user
         for cmd in commands:
                 nr_result = nr.run(task=netmiko_send_command, command_string=cmd)
                 # Print AggregatedResult to screen
                 print_result(nr_result)
+
                 # Replace '|' and ' ' characters with '_' for filename
                 cmd_name = cmd.replace('|','_').replace(' ','_')
-                # Create a filename from each command and write to a file
+                # Create a filename from each command
                 filename = '/'.join((dirname, f'result_{cmd_name}.txt'))
+                
+                # Open the file you created to write to
                 with open(filename, 'w+') as f:
                         # Print to a file in a human-friendly format
                         for device, results in nr_result.items():
                                 if not results[0].failed:
                                         print(f'\n"{device}": \n\n{results[0].result}\n\n', file=f)
 
-        # Generate placeholder username and password to delete the real
-        # production username/password
+        # Generate placeholder username/password to delete the 
+        # real production username/password
         generate_defaults_yaml('cisco', 'password')
 
 
