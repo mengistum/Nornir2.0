@@ -1,0 +1,7 @@
+! ######################################################################
+! Sample config to remove int loopback 10 and save the change
+! Update with your own list of configurations change you want to make
+! As these five lines are comments, you do not need to worry about them.
+! ######################################################################
+no int loopback 10
+do wr mem

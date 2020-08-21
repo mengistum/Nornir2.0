@@ -1,0 +1,8 @@
+show switch
+show switch stack-ring speed
+show environment power all
+show power inline | ex off
+show ver | b Ports
+show lldp neigh
+show interface status | i half
+show vlan summary
