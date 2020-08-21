@@ -1,10 +1,26 @@
 ---
-SW_10.192.224.30:
-  hostname: 10.192.224.30
+SW_10.254.68.8:
+  hostname: 10.254.68.8
   groups:
     - Switch
 
-SW_10.193.224.20:
-  hostname: 10.193.224.20
+SW_10.254.68.10:
+  hostname: 10.254.68.10
   groups:
     - Switch
+
+SW_10.254.68.15:
+  hostname: 10.254.68.15
+  groups:
+    - Switch
+
+SW_10.254.68.12:
+  hostname: 10.254.68.12
+  groups:
+    - Switch
+
+SW_192.168.1.1:
+  hostname: 192.168.1.1
+  groups:
+    - BorderSW
+...
