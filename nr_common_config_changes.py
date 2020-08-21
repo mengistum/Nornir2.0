@@ -3,8 +3,8 @@
 """
 Author: Meheretab Mengistu
 Purpose: To modify configuration on Cisco switches
-Version: 1.0
-Date: August 20, 2020
+Version: 1.1
+Date: August 21, 2020
 """
 
 # Import NORNIR module, datetime module, OS module
