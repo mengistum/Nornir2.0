@@ -6,7 +6,7 @@ Switch:
     napalm:
       extras:
         optional_args:
-          secret: ki@h5kuHIquF
+          secret: P@ssw0rd
           
 BorderSW:
   port: 22
